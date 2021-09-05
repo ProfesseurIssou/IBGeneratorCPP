@@ -1,0 +1,61 @@
+{
+  "name": "ibgenerator",
+  "displayName": "IBGenerator",
+  "description": "Generateur de projet CPP",
+  "version": "0.0.1",
+  "publisher": "ProfesseurIssou",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:ibgenerator.createProject",
+    "onCommand:ibgenerator.createClass",
+    "workspaceContains:.vscode/.ibgenerator"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ibgenerator.createProject",
+        "title": "IBGenerator: Create new C++ project"
+      },
+      {
+        "command": "ibgenerator.createClass",
+        "title": "IBGenerator: Create new class"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "workbench.action.tasks.test",
+        "key": "f7"
+      },
+      {
+        "command": "workbench.action.tasks.build",
+        "key": "ctrl+f7"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.31",
+    "@types/node-fetch": "^2.5.7",
+    "@types/vscode": "^1.43.0",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "@types/jest": "^27.0.1",
+    "glob": "^7.1.7",
+    "mocha": "^9.1.1",
+    "node-fetch": "^2.6.1",
+    "vscode-test": "^1.6.1"
+  }
+}
