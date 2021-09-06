@@ -2,13 +2,13 @@
   "name": "ibgenerator",
   "displayName": "IBGenerator",
   "description": "Generateur de projet CPP",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "publisher": "ProfesseurIssou",
   "repository": {
     "url": "https://github.com/ProfesseurIssou/IBGeneratorCPP"
 },
   "engines": {
-    "vscode": "^1.60.0"
+    "vscode": "^1.59.0"
   },
   "categories": [
     "Other"

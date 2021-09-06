@@ -125,7 +125,7 @@ const createProject = async (local?: boolean) => {
     let templates = [];
 
     try {
-        let data = JSON.parse('{"version": "2","directories": [".vscode","bin","include","lib","src"],"templates": {"[G++/GDB] Linux": {"files": {"shared/Makefile": "Makefile","shared/tasks.json": ".vscode/tasks.json","hello-world/main.cpp": "src/main.cpp","gcc/launch.json": ".vscode/launch.json"},"openFiles":["src/main.cpp"]}}}');
+        let data = JSON.parse('{"version": "2","directories": [".vscode","bin","include","lib","src"],"templates": {"[G++/GDB] Windows MinGW": {"files": {"shared/Makefile": "Makefile","shared/tasks.json": ".vscode/tasks.json","hello-world/main.cpp": "src/main.cpp","gcc/launch.json": ".vscode/launch.json"},"openFiles":["src/main.cpp"]},"[G++/GDB] Linux": {"files": {"shared/Makefile": "Makefile","shared/tasks.json": ".vscode/tasks.json","hello-world/main.cpp": "src/main.cpp","gcc/launch.json": ".vscode/launch.json"},"openFiles":["src/main.cpp"]}}}');
 
         for (let tname in data.templates) { templates.push(tname); }
 
@@ -189,7 +189,7 @@ const downloadTemplate = async (files: IBGeneratorProjectsJSON, templateName: st
     }
     
     //POUR CHAQUE TEMPLATE
-    if(templateName == "[G++/GDB] Linux"){
+    if(templateName == "[G++/GDB] Windows MinGW"){
         //MAKEFILE
         const makefileValue = "CXX\t\t  := g++\nCXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb\n\nBIN\t\t:= bin\nSRC\t\t:= src\nINCLUDE\t:= include\nLIB\t\t:= lib\n\nLIBRARIES\t:=\nEXECUTABLE\t:= main.exe\n\n\nall: $(BIN)/$(EXECUTABLE)\n\nrun: clean all\n\tcls\n\t./$(BIN)/$(EXECUTABLE)\n\n$(BIN)/$(EXECUTABLE): $(SRC)/*.cpp\n\t$(CXX) $(CXX_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)\n\nclean:\n\t#CMD\n-del $(BIN) /F /Q\n#POWERSHELL\n#-del $(BIN)/* -Force\n";
         writeFileSync(`${folder}/Makefile`, makefileValue);
@@ -201,6 +201,20 @@ const downloadTemplate = async (files: IBGeneratorProjectsJSON, templateName: st
         writeFileSync(`${folder}/src/main.cpp`, mainValue);
         //LAUNCH.JSON
         const launchValue = '{\n\t"version": "0.2.0",\n\t"configurations": [\n\t\t{\n\t\t\t"name": "C++ Debug (gdb)",\n\t\t\t"type": "cppdbg",\n\t\t\t"request": "launch",\n\t\t\t"program": "${workspaceFolder}/bin/main.exe",\n\t\t\t"preLaunchTask": "Build C++ project",\n\t\t\t"args": [],\n\t\t\t"stopAtEntry": false,\n\t\t\t"cwd": "${workspaceFolder}",\n\t\t\t"environment": [],\n\t\t\t"externalConsole": false,\n\t\t\t"MIMode": "gdb.exe",\n\t\t\t"miDebuggerPath": "gdb.exe",\n\t\t\t"setupCommands": [\n\t\t\t\t{\n\t\t\t\t\t"description": "Enable pretty-printing for gdb",\n\t\t\t\t\t"text": "-enable-pretty-printing",\n\t\t\t\t\t"ignoreFailures": true\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t]\n}';
+        writeFileSync(`${folder}/.vscode/launch.json`, launchValue);
+    }
+    if(templateName == "[G++/GDB] Linux"){
+        //MAKEFILE
+        const makefileValue = "CXX\t\t  := g++\nCXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb\n\nBIN\t\t:= bin\nSRC\t\t:= src\nINCLUDE\t:= include\nLIB\t\t:= lib\n\nLIBRARIES\t:=\nEXECUTABLE\t:= main\n\n\nall: $(BIN)/$(EXECUTABLE)\n\nrun: clean all\n\tclear\n\t./$(BIN)/$(EXECUTABLE)\n\n$(BIN)/$(EXECUTABLE): $(SRC)/*.cpp\n\t$(CXX) $(CXX_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)\n\nclean:\n\t-rm $(BIN)/*";
+        writeFileSync(`${folder}/Makefile`, makefileValue);
+        //TASK.JSON
+        const taskValue = '{"version": "2.0.0","tasks": [{"label": "Build C++ project","type": "shell","group": {"kind": "build","isDefault": true},"command": "make",},{"label": "Build & run C++ project","type": "shell","group": {"kind": "test","isDefault": true},"command": "make","args": ["run"]}]}';
+        writeFileSync(`${folder}/.vscode/tasks.json`, taskValue);
+        //MAIN.CPP
+        const mainValue = '#include <iostream>\n\nint main() {\n\tstd::cout << "Hello IBgenerator project!" << std::endl;\n}';
+        writeFileSync(`${folder}/src/main.cpp`, mainValue);
+        //LAUNCH.JSON
+        const launchValue = '{"version": "0.2.0","configurations": [{"name": "C++ Debug (gdb)","type": "cppdbg","request": "launch","program": "${workspaceFolder}/bin/main","preLaunchTask": "Build C++ project","args": [],"stopAtEntry": false,"cwd": "${workspaceFolder}","environment": [],"externalConsole": true,"MIMode": "gdb","miDebuggerPath": "/usr/bin/gdb","setupCommands": [{"description": "Enable pretty-printing for gdb","text": "-enable-pretty-printing","ignoreFailures": true}]}]}';
         writeFileSync(`${folder}/.vscode/launch.json`, launchValue);
     }
 
