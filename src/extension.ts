@@ -191,7 +191,7 @@ const downloadTemplate = async (files: IBGeneratorProjectsJSON, templateName: st
     //POUR CHAQUE TEMPLATE
     if(templateName == "[G++/GDB] Windows MinGW"){
         //MAKEFILE
-        const makefileValue = "CXX\t\t  := g++\nCXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb\n\nBIN\t\t:= bin\nSRC\t\t:= src\nINCLUDE\t:= include\nLIB\t\t:= lib\n\nLIBRARIES\t:=\nEXECUTABLE\t:= main.exe\n\n\nall: $(BIN)/$(EXECUTABLE)\n\nrun: clean all\n\tcls\n\t./$(BIN)/$(EXECUTABLE)\n\n$(BIN)/$(EXECUTABLE): $(SRC)/*.cpp\n\t$(CXX) $(CXX_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)\n\nclean:\n\t#CMD\n-del $(BIN) /F /Q\n#POWERSHELL\n#-del $(BIN)/* -Force\n";
+        const makefileValue = "CXX\t\t  := g++\nCXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb\n\nBIN\t\t:= bin\nSRC\t\t:= src\nINCLUDE\t:= include\nLIB\t\t:= lib\n\nLIBRARIES\t:=\nEXECUTABLE\t:= main.exe\n\n\nall: $(BIN)/$(EXECUTABLE)\n\nrun: clean all\n\tcls\n\t./$(BIN)/$(EXECUTABLE)\n\n$(BIN)/$(EXECUTABLE): $(SRC)/*.cpp\n\t$(CXX) $(CXX_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)\n\nclean:\n#CMD\n\t-del $(BIN) /F /Q\n#POWERSHELL\n#\t-del $(BIN)/* -Force\n";
         writeFileSync(`${folder}/Makefile`, makefileValue);
         //TASK.JSON
         const taskValue = '{\n\t"version": "2.0.0",\n\t"tasks": [\n\t\t{\n\t\t\t"label": "Build C++ project",\n\t\t\t"type": "shell",\n\t\t\t"group": {\n\t\t\t\t"kind": "build",\n\t\t\t\t"isDefault": true\n\t\t\t},\n\t\t\t"command": "make",\n//"command": "mingw32-make",\n\t\t},\n\t\t{\n\t\t\t"label": "Build & run C++ project",\n\t\t\t"type": "shell",\n\t\t\t"group": {\n\t\t\t\t"kind": "test",\n\t\t\t\t"isDefault": true\n\t\t\t},\n\t\t\t"command": "make",\n//"command": "mingw32-make",\n\t\t\t"args": [\n\t\t\t\t"run"\n\t\t\t]\n\t\t}\n\t]\n}';
