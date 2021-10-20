@@ -72,13 +72,13 @@ const createClass = async () => {
         const currentFolder = currentFolderWorkspace.uri.fsPath;
         if(selected == "constructor"){
             //HPP
-            let hppValue = "#pragma once\n\nclass ibclass {\n\npublic:\n\tibclass();\n\t~ibclass();\n};";
+            let hppValue = "/**\n * Fichier Interface de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date :\n**/\n\n#pragma once\n\nclass ibclass {\n\npublic:\n\tibclass();\n\t~ibclass();\n};";
             hppValue = hppValue.replace(new RegExp('ibclass',"g"),val);
             writeFileSync(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`, hppValue);
             vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`)
                 .then(doc => vscode.window.showTextDocument(doc, { preview: false }));
             //CPP
-            let cppValue = '#include "ibclass.hpp"\n\nibclass::ibclass() {\n\n}\n\nibclass::~ibclass() {\n\n}';
+            let cppValue = '/**\n * Fichier Implémentation de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date : \n**/\n\n#include "ibclass.hpp"\n\n// Constructeur\nibclass::ibclass() {\n\n}\n\n// Destructeur\nibclass::~ibclass() {\n\n}';
             cppValue = cppValue.replace(new RegExp('ibclass',"g"),val);
             writeFileSync(`${currentFolder}/${templates[selected]["ibclass.cpp"].folder}/${val}.${templates[selected]["ibclass.cpp"].extension}`, cppValue);
             vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.cpp"].folder}/${val}.${templates[selected]["ibclass.cpp"].extension}`)
@@ -86,13 +86,13 @@ const createClass = async () => {
         }
         if(selected == "empty"){
             //HPP
-            let hppValue = "#pragma once\n\nclass ibclass {\n\n};";
+            let hppValue = "/**\n * Fichier Interface de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date :\n**/#pragma once\n\nclass ibclass {\n\n};";
             hppValue = hppValue.replace(new RegExp('ibclass',"g"),val);
             writeFileSync(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`, hppValue);
             vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`)
                 .then(doc => vscode.window.showTextDocument(doc, { preview: false }));
             //CPP
-            let cppValue = '#include "ibclass.hpp"\n';
+            let cppValue = '/**\n * Fichier Implémentation de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date : \n**/\n\n#include "ibclass.hpp"\n';
             cppValue = cppValue.replace(new RegExp('ibclass',"g"),val);
             writeFileSync(`${currentFolder}/${templates[selected]["ibclass.cpp"].folder}/${val}.${templates[selected]["ibclass.cpp"].extension}`, cppValue);
             vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.cpp"].folder}/${val}.${templates[selected]["ibclass.cpp"].extension}`)
@@ -100,13 +100,13 @@ const createClass = async () => {
         }
         if(selected == "singleton"){
             //HPP
-            let hppValue = "#pragma once\n\nclass ibclass {\n\npublic:\n\tstatic ibclass& getInstance();\n\n\tibclass(easyclass const&) = delete;\n\tvoid operator=(ibclass const&) = delete;\n\nprivate:\n\tibclass();};";
+            let hppValue = "/**\n * Fichier Interface de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date :\n**/#pragma once\n\nclass ibclass {\n\npublic:\n\tstatic ibclass& getInstance();\n\n\tibclass(easyclass const&) = delete;\n\tvoid operator=(ibclass const&) = delete;\n\nprivate:\n\tibclass();};";
             hppValue = hppValue.replace(new RegExp('ibclass',"g"),val);
             writeFileSync(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`, hppValue);
             vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`)
                 .then(doc => vscode.window.showTextDocument(doc, { preview: false }));
             //CPP
-            let cppValue = '#include "ibclass.hpp"\n\nibclass::ibclass() {\n\n}\n\nibclass& ibclass::getInstance() {\nstatic ibclass instance;\nreturn instance;\n}';
+            let cppValue = '/**\n * Fichier Implémentation de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date : \n**/\n\n#include "ibclass.hpp"\n\n// Constructeur\nibclass::ibclass() {\n\n}\n\nibclass& ibclass::getInstance() {\nstatic ibclass instance;\nreturn instance;\n}';
             cppValue = cppValue.replace(new RegExp('ibclass',"g"),val);
             writeFileSync(`${currentFolder}/${templates[selected]["ibclass.cpp"].folder}/${val}.${templates[selected]["ibclass.cpp"].extension}`, cppValue);
             vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.cpp"].folder}/${val}.${templates[selected]["ibclass.cpp"].extension}`)
@@ -197,7 +197,7 @@ const downloadTemplate = async (files: IBGeneratorProjectsJSON, templateName: st
         const taskValue = '{\n\t"version": "2.0.0",\n\t"tasks": [\n\t\t{\n\t\t\t"label": "Build C++ project",\n\t\t\t"type": "shell",\n\t\t\t"group": {\n\t\t\t\t"kind": "build",\n\t\t\t\t"isDefault": true\n\t\t\t},\n\t\t\t"command": "make",\n//"command": "mingw32-make",\n\t\t},\n\t\t{\n\t\t\t"label": "Build & run C++ project",\n\t\t\t"type": "shell",\n\t\t\t"group": {\n\t\t\t\t"kind": "test",\n\t\t\t\t"isDefault": true\n\t\t\t},\n\t\t\t"command": "make",\n//"command": "mingw32-make",\n\t\t\t"args": [\n\t\t\t\t"run"\n\t\t\t]\n\t\t}\n\t]\n}';
         writeFileSync(`${folder}/.vscode/tasks.json`, taskValue);
         //MAIN.CPP
-        const mainValue = '#include <iostream>\n\nint main() {\n\tstd::cout << "Hello IBgenerator project!" << std::endl;\n}';
+        const mainValue = '/**\n * Fichier Application\n * Cible d exécution : Windows / Linux / Raspberry / ESP32 / Arduino\n * Nom du fichier :\n * Description : \n * Dépendances (lib, classes, ...): \n * Auteur :\n * Date :\n**/\n\n#include <iostream>				//...\n#include <Windows.h>			//affichage des caractères UTF-8 dans la console\n\nusing namespace std;\n\nint main() {\n	SetConsoleOutputCP(CP_UTF8); //affichage des caractères UTF-8 dans la console\n	setvbuf(stdout, nullptr, _IOFBF, 1000);\n\n	cout << "Hello IBgenerator project!" << endl;\n	\n	return 0;\n}';
         writeFileSync(`${folder}/src/main.cpp`, mainValue);
         //LAUNCH.JSON
         const launchValue = '{\n\t"version": "0.2.0",\n\t"configurations": [\n\t\t{\n\t\t\t"name": "C++ Debug (gdb)",\n\t\t\t"type": "cppdbg",\n\t\t\t"request": "launch",\n\t\t\t"program": "${workspaceFolder}/bin/main.exe",\n\t\t\t"preLaunchTask": "Build C++ project",\n\t\t\t"args": [],\n\t\t\t"stopAtEntry": false,\n\t\t\t"cwd": "${workspaceFolder}",\n\t\t\t"environment": [],\n\t\t\t"externalConsole": false,\n\t\t\t"MIMode": "gdb",\n\t\t\t"miDebuggerPath": "gdb.exe",\n\t\t\t"setupCommands": [\n\t\t\t\t{\n\t\t\t\t\t"description": "Enable pretty-printing for gdb",\n\t\t\t\t\t"text": "-enable-pretty-printing",\n\t\t\t\t\t"ignoreFailures": true\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t]\n}';
@@ -211,10 +211,10 @@ const downloadTemplate = async (files: IBGeneratorProjectsJSON, templateName: st
         const taskValue = '{"version": "2.0.0","tasks": [{"label": "Build C++ project","type": "shell","group": {"kind": "build","isDefault": true},"command": "make",},{"label": "Build & run C++ project","type": "shell","group": {"kind": "test","isDefault": true},"command": "make","args": ["run"]}]}';
         writeFileSync(`${folder}/.vscode/tasks.json`, taskValue);
         //MAIN.CPP
-        const mainValue = '#include <iostream>\n\nint main() {\n\tstd::cout << "Hello IBgenerator project!" << std::endl;\n}';
+        const mainValue = '/**\n * Fichier Application\n * Cible d exécution : Windows / Linux / Raspberry / ESP32 / Arduino\n * Nom du fichier :\n * Description : \n * Dépendances (lib, classes, ...): \n * Auteur :\n * Date :\n**/\n\n#include <iostream>\t\t\t\t//...\n\nusing namespace std;\n\nint main() {\n\tcout << "Hello IBgenerator project!" << endl;\n\t\n\treturn 0;\n}';
         writeFileSync(`${folder}/src/main.cpp`, mainValue);
         //LAUNCH.JSON
-        const launchValue = '{"version": "0.2.0","configurations": [{"name": "C++ Debug (gdb)","type": "cppdbg","request": "launch","program": "${workspaceFolder}/bin/main","preLaunchTask": "Build C++ project","args": [],"stopAtEntry": false,"cwd": "${workspaceFolder}","environment": [],"externalConsole": true,"MIMode": "gdb","miDebuggerPath": "/usr/bin/gdb","setupCommands": [{"description": "Enable pretty-printing for gdb","text": "-enable-pretty-printing","ignoreFailures": true}]}]}';
+        const launchValue = '{"version": "0.2.0","configurations": [{"name": "C++ Debug (gdb)","type": "cppdbg","request": "launch","program": "${workspaceFolder}/bin/main","preLaunchTask": "Build C++ project","args": [],"stopAtEntry": false,"cwd": "${workspaceFolder}","environment": [],"externalConsole": false,"MIMode": "gdb","miDebuggerPath": "/usr/bin/gdb","setupCommands": [{"description": "Enable pretty-printing for gdb","text": "-enable-pretty-printing","ignoreFailures": true}]}]}';
         writeFileSync(`${folder}/.vscode/launch.json`, launchValue);
     }
 
