@@ -2,7 +2,7 @@
   "name": "ibgenerator",
   "displayName": "IBGenerator",
   "description": "Generateur de projet CPP",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "publisher": "ProfesseurIssou",
   "repository": {
     "url": "https://github.com/ProfesseurIssou/IBGeneratorCPP"

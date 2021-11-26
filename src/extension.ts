@@ -56,7 +56,7 @@ export function deactivate() {
 
 const createClass = async () => {
     try {
-        const templates:IBGeneratorClassesJSON = JSON.parse('{"constructor":{"ibclass.cpp":{"folder":"src","extension":"cpp"},"ibclass.hpp":{"folder":"include","extension":"hpp"}},"empty":{"ibclass.cpp":{"folder":"src","extension":"cpp"},"ibclass.hpp":{"folder":"include","extension":"hpp"}},"singleton":{"ibclass.cpp":{"folder":"src","extension":"cpp"},"ibclass.hpp":{"folder":"include","extension":"hpp"}},"template":{"ibclass.tpp":{"folder":"src","extension":"tpp"},"ibclass.hpp":{"folder":"include","extension":"hpp"}}}');
+        const templates:IBGeneratorClassesJSON = JSON.parse('{"unite":{"ibclass.cpp":{"folder":"src","extension":"cpp"},"ibclass.hpp":{"folder":"include","extension":"hpp"}},"constructor":{"ibclass.cpp":{"folder":"src","extension":"cpp"},"ibclass.hpp":{"folder":"include","extension":"hpp"}},"empty":{"ibclass.cpp":{"folder":"src","extension":"cpp"},"ibclass.hpp":{"folder":"include","extension":"hpp"}},"singleton":{"ibclass.cpp":{"folder":"src","extension":"cpp"},"ibclass.hpp":{"folder":"include","extension":"hpp"}}}');
         const template_files = [];
         for(let tname in templates){template_files.push(tname);}
 
@@ -70,6 +70,19 @@ const createClass = async () => {
         if(!currentFolderWorkspace){return;}
 
         const currentFolder = currentFolderWorkspace.uri.fsPath;
+        if(selected == "unite"){
+            //HPP
+            let hppValue = "/**\n * Fichier Interface de l\'unite\n * Nom du fichier : \n * Nom de l'unite : \n * Description : \n * Auteur : \n * Date :\n**/\n\n#pragma once\n\n";
+            writeFileSync(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`, hppValue);
+            vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`)
+                .then(doc => vscode.window.showTextDocument(doc, { preview: false }));
+            //CPP
+            let cppValue = '/**\n * Fichier Implémentation de l\'unite\n * Nom du fichier : \n * Nom de l\'unite : \n * Description : \n * Auteur : \n * Date : \n**/\n\n#include "ibclass.hpp"\n\n';
+            cppValue = cppValue.replace(new RegExp('ibclass',"g"),val);
+            writeFileSync(`${currentFolder}/${templates[selected]["ibclass.cpp"].folder}/${val}.${templates[selected]["ibclass.cpp"].extension}`, cppValue);
+            vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.cpp"].folder}/${val}.${templates[selected]["ibclass.cpp"].extension}`)
+                .then(doc => vscode.window.showTextDocument(doc, { preview: false }));
+        }
         if(selected == "constructor"){
             //HPP
             let hppValue = "/**\n * Fichier Interface de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date :\n**/\n\n#pragma once\n\nclass ibclass {\n\npublic:\n\tibclass();\n\t~ibclass();\n};";
@@ -231,7 +244,6 @@ const downloadTemplate = async (files: IBGeneratorProjectsJSON, templateName: st
             }
         }
     }
-
     if (!existsSync(`${folder}/.vscode`)) {
         mkdirSync(`${folder}/.vscode`);
     }
