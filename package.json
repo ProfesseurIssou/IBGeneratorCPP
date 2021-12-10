@@ -2,7 +2,7 @@
   "name": "ibgenerator",
   "displayName": "IBGenerator",
   "description": "Generateur de projet CPP",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "publisher": "ProfesseurIssou",
   "repository": {
     "url": "https://github.com/ProfesseurIssou/IBGeneratorCPP"
@@ -11,7 +11,7 @@
     "vscode": "^1.59.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages"
   ],
   "activationEvents": [
     "onCommand:ibgenerator.createProject",

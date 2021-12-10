@@ -72,7 +72,7 @@ const createClass = async () => {
         const currentFolder = currentFolderWorkspace.uri.fsPath;
         if(selected == "unite"){
             //HPP
-            let hppValue = "/**\n * Fichier Interface de l\'unite\n * Nom du fichier : \n * Nom de l'unite : \n * Description : \n * Auteur : \n * Date :\n**/\n\n#pragma once\n\n";
+            let hppValue = "/**\n * Fichier Interface de l\'unite\n * Nom du fichier : \n * Nom de l'unite : \n * Description : \n * Auteur : \n * Date : \n**/\n\n#pragma once\n\n";
             writeFileSync(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`, hppValue);
             vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`)
                 .then(doc => vscode.window.showTextDocument(doc, { preview: false }));
@@ -85,7 +85,7 @@ const createClass = async () => {
         }
         if(selected == "constructor"){
             //HPP
-            let hppValue = "/**\n * Fichier Interface de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date :\n**/\n\n#pragma once\n\nclass ibclass {\n\npublic:\n\tibclass();\n\t~ibclass();\n};";
+            let hppValue = "/**\n * Fichier Interface de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date : \n**/\n\n#pragma once\n\nclass ibclass {\n\npublic:\n\tibclass();\n\t~ibclass();\n};";
             hppValue = hppValue.replace(new RegExp('ibclass',"g"),val);
             writeFileSync(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`, hppValue);
             vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`)
@@ -99,7 +99,7 @@ const createClass = async () => {
         }
         if(selected == "empty"){
             //HPP
-            let hppValue = "/**\n * Fichier Interface de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date :\n**/#pragma once\n\nclass ibclass {\n\n};";
+            let hppValue = "/**\n * Fichier Interface de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date : \n**/\n\n#pragma once\n\nclass ibclass {\n\n};";
             hppValue = hppValue.replace(new RegExp('ibclass',"g"),val);
             writeFileSync(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`, hppValue);
             vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`)
@@ -113,7 +113,7 @@ const createClass = async () => {
         }
         if(selected == "singleton"){
             //HPP
-            let hppValue = "/**\n * Fichier Interface de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date :\n**/#pragma once\n\nclass ibclass {\n\npublic:\n\tstatic ibclass& getInstance();\n\n\tibclass(easyclass const&) = delete;\n\tvoid operator=(ibclass const&) = delete;\n\nprivate:\n\tibclass();};";
+            let hppValue = "/**\n * Fichier Interface de la classe\n * Nom du fichier : \n * Nom de la classe : \n * Description : \n * Auteur : \n * Date : \n**/\n\n#pragma once\n\nclass ibclass {\n\npublic:\n\tstatic ibclass& getInstance();\n\n\tibclass(easyclass const&) = delete;\n\tvoid operator=(ibclass const&) = delete;\n\nprivate:\n\tibclass();};";
             hppValue = hppValue.replace(new RegExp('ibclass',"g"),val);
             writeFileSync(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`, hppValue);
             vscode.workspace.openTextDocument(`${currentFolder}/${templates[selected]["ibclass.hpp"].folder}/${val}.${templates[selected]["ibclass.hpp"].extension}`)
